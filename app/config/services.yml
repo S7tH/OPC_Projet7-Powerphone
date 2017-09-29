@@ -1,0 +1,8 @@
+services:
+    bilemo_authenticator:
+        class: AppBundle\Security\BilemoAuthenticator
+        arguments: ["@csa_guzzle.client.bilemo_api", "%bilemo_client_id%", "%bilemo_client_secret%", "@router"]
+
+    bilemo_user_provider:
+        class: AppBundle\Security\BilemoUserProvider
+        arguments: ["@csa_guzzle.client.bilemo_api", "@jms_serializer"]
