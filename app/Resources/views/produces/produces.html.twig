@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-8">
+			<h1>{{ produces.title }}</h1>
+			<p>{{ produces.shortDescription }}</p>
+			<p>Size: {{ produces.content }}</p>
+		</div>
+	</div>
+</div>
+{% endblock %}

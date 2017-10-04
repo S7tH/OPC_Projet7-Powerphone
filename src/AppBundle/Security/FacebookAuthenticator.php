@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-class BilemoAuthenticator implements SimplePreAuthenticatorInterface, AuthenticationFailureHandlerInterface
+class FacebookAuthenticator implements SimplePreAuthenticatorInterface, AuthenticationFailureHandlerInterface
 {
     private $client;
     private $clientId;
@@ -35,7 +35,7 @@ class BilemoAuthenticator implements SimplePreAuthenticatorInterface, Authentica
 
         $code = $request->query->get('code');
         $redirectUri = $this->router->generate('admin_auth', [], ROUTER::ABSOLUTE_URL);
-        $url = 'http://127.0.0.1:8001/oauth/v2/token?client_id='.$this->clientId.'&client_secret='.$this->clientSecret.'&redirect_uri='.urlencode($redirectUri).'&grant_type=authorization_code&code='.$code;
+        $url = 'https://graph.facebook.com/v2.10/oauth/access_token?client_id='.$this->clientId.'&client_secret='.$this->clientSecret.'&redirect_uri='.urlencode($redirectUri).'&code='.$code;
 
         $response = $this->client->post($url, array(''));
 
@@ -44,12 +44,12 @@ class BilemoAuthenticator implements SimplePreAuthenticatorInterface, Authentica
         $res = explode('=', $info[0]);
 
         if (isset($res[0]) && 'error' == $res[0]) {
-            throw new BadCredentialsException('No access_token returned by Bilemo. Start over the process.');
+            throw new BadCredentialsException('No access_token returned by Facebook. Start over the process.');
         }
 
         return new PreAuthenticatedToken(
             'anon.',
-            $res[1],
+            $res[0],
             $providerKey
         );
     }

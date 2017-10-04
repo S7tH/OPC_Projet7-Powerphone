@@ -1,27 +1,124 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>{% block title %}Welcome{% endblock %}</title>
+        {% block stylesheets %}
+            <!-- CDN Bootstrap Core CSS -->
+            <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
+
+            <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        {% endblock %}
     </head>
-    <body>
-        <div class="container">
-            <div class="jumbotron">
-                {% block body %}{% endblock %}
-                {% if app.user %}
-                    <a href="{{ path('logout') }}" type="button" class="btn btn-danger btn-lg"><i class="fa fa-sign-out"></i> Logout</a>
-                {% else %}
-                    <a href="http://127.0.0.1:8001/oauth/v2/auth?client_id={{ bilemo_client_id }}&amp;response_type=code&amp;scope=user&amp;state={{ state }}&amp;redirect_uri={{ url('admin_auth') }}" type="button" class="btn btn-info btn-lg"><i class="glyphicon glyphicon-phone"></i> S'authentifier avec Bilemo</a>
-                {% endif %}
+
+    <body id="page-top">
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand" href="#page-top">POWERPHONE</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#pathhomepage">Accueil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#pathproduces">Produits</a>
+                        </li>
+                    
+                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="#pathlogout" class="nav-link">Déconnexion</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link"  href="#pathregister">Inscription</a>
+                        </li>
+                        <li class="nav-item"> 
+                            <!-- <fb:login-button class="nav-link" data-auto-logout-link="true" scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button> -->
+                        </li>   
+                        {% endif %}
+                    </ul>
+                </div>
             </div>
-            <footer class="footer"><p>&copy; {{ "now"|date("Y") }}</p></footer>
-        </div>
+        </nav>
+
+        <header class="bg-primary text-white">
+            <div class="container text-center">
+              <p class="lead">Powerphone premier client de Bilemo&co</p>
+            </div>
+        </header>
+
+        <!-- <div id="fb-root"></div> -->
+
+        
+        {% block body %}{% endblock %}
+        <!-- Footer -->
+        <footer style="position: absolute;bottom: 0;width: 100%;" class="footer py-5 bg-dark">
+            <div class="container">
+                <p class="m-0 text-center text-white">Copyright &copy; Powerphone {{ "now"|date("Y") }}</p>
+            </div>
+        <!-- /.container -->
+        </footer>
+
+        <!-- CDN jQuery -->
+        <script 
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous">
+        </script>
+
+        <!-- CDN Bootstrap Core JavaScript -->
+        <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
+        <!-- Facebbok sdk 
+        <script>
+            window.fbAsyncInit = function() {
+              FB.init({
+                appId      : '{117013918991754}',
+                cookie     : true,
+                xfbml      : true,
+                version    : '{version=2.10}'
+              });
+              FB.AppEvents.logPageView();   
+            };
+
+            (function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.10&appId=117013918991754";
+                fjs.parentNode.insertBefore(js, fjs);
+              }(document, 'script', 'facebook-jssdk'));
+            
+            //check if the user is already or not connected
+            FB.getLoginStatus(function(response)
+            {
+                statusChangeCallback(response);
+            });
+
+            //callback to know the last state of connexion
+            function checkLoginState()
+            {
+                FB.getLoginStatus(function(response) 
+                {
+                statusChangeCallback(response);
+                });
+            }
+
+            FB.getLoginStatus(function(response) 
+            {
+                if (response.status === 'connected') 
+                {
+                  var accessToken = response.authResponse.accessToken;
+                } 
+            } );
+        </script>-->
+
     </body>
 </html>
-
-{# &amp;scope=user&amp;state='.sha1(uniqid(mt_rand(), true)) #}

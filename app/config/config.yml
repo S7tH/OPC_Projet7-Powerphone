@@ -39,7 +39,7 @@ twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     globals:
-        bilemo_client_id: '%bilemo_client_id%'
+        facebook_client_id: '%facebook_client_id%'
 
 # Doctrine Configuration
 doctrine:
@@ -75,6 +75,11 @@ csa_guzzle:
     profiler: '%kernel.debug%'
     logger: true
     clients:
+        facebook_api:
+            config:
+                base_url: https://graph.facebook.com
         bilemo_api:
             config:
                 base_url: '%bilemo_api_url%'
+
+                
