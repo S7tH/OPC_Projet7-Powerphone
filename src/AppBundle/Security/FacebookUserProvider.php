@@ -21,7 +21,7 @@ class FacebookUserProvider implements UserProviderInterface
 
     public function loadUserByUsername($username)
     {
-        $url = 'https://graph.facebook.com/v2.10/me/accounts?acces_token='.$username;
+        $url = 'https://graph.facebook.com/me/permissions?access_token='.$username;
 
         $response = $this->client->get($url);
         
@@ -30,7 +30,7 @@ class FacebookUserProvider implements UserProviderInterface
         
         if (!$userData)
         {
-            throw new \LogicException('Did not managed to get your user info from Bilemo.');
+            throw new \LogicException('Did not managed to get your user info from Facebook.');
         }
         $user = new User($username, null);
         

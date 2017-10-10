@@ -37,19 +37,22 @@ class FacebookAuthenticator implements SimplePreAuthenticatorInterface, Authenti
         $redirectUri = $this->router->generate('admin_auth', [], ROUTER::ABSOLUTE_URL);
         $url = 'https://graph.facebook.com/v2.10/oauth/access_token?client_id='.$this->clientId.'&client_secret='.$this->clientSecret.'&redirect_uri='.urlencode($redirectUri).'&code='.$code;
 
-        $response = $this->client->post($url, array(''));
+        $response = $this->client->get($url);
 
         $res = $response->getBody()->getContents();
-        $info = explode('&', $res);
-        $res = explode('=', $info[0]);
 
-        if (isset($res[0]) && 'error' == $res[0]) {
+        $info = explode(':', $res);
+        $access = explode(',', $info[1]);
+        $res = explode('"', $access[0]);
+
+        if (isset($res[1]) && 'error' == $res[1])
+        {
             throw new BadCredentialsException('No access_token returned by Facebook. Start over the process.');
         }
 
         return new PreAuthenticatedToken(
             'anon.',
-            $res[0],
+            $res[1],
             $providerKey
         );
     }
@@ -64,8 +67,6 @@ class FacebookAuthenticator implements SimplePreAuthenticatorInterface, Authenti
     public function authenticateToken(TokenInterface $token, UserProviderInterface $userProvider, $providerKey)
     {
         $accessToken = $token->getCredentials();
-
-        //$checkUser = $container->get('security.token_storage')->getToken()->getUser()->getUsername();
 
         $user = $userProvider->loadUserByUsername($accessToken);
         return new PreAuthenticatedToken(

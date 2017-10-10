@@ -1,44 +1,38 @@
 {% extends 'base.html.twig' %}
 
-{% block stylesheets %}
-{{ parent()}}
-<style type="text/css">
-	.producesRow {
-		margin: 1.5rem 0;
-	}
-</style>
-{% endblock %}
-
 {% block body %}
-
+<br/>
 <div class="container">
-	<h1>Produit Bilemo</h1>
+	<h1>Nos produits Bilemo</h1>
 	<form class="text-right" action="#pathproduces" method="POST">
 		<input type="text" name="keyword" placeholder="keyword">
 		<button type="submit" class="btn btn-primary">Search</button>
 	</form>
 
-	{# {% if produces.data|length > 0 %} <!-- Vérification si il y a des produits dans la liste --> #}
+	{% if produces|length > 0 %} <!-- Vérification si il y a des produits dans la liste -->
 	<div class="row">
-		{% for produces in produces.data %}
-		<div class="col-12 producesRow">
-			<div class="row">
-				{# text #}
-				<div class="col-8">
-					<div class="row">
-						<div class="col-12">
-							<a href="{{ path('get_produces', {'id': produces.id}) }}"><h2>{{ produces.title }}</h2></a>
-						</div>
-						<div class="col-12">
-							<p>{{ produces.shortDescription }}</p>
-						</div>
-					</div>
+			{{ dump(produces) }}
+
+
+			<div class="container">
+				<div class="row">
+					 <header style="margin: 3rem 0;" class="col-12">
+							<h2 class="display-4">Profitez de toute la gamme Bilemo</h2>
+					 </header>
+					 {% for produce in produces.data %}
+					 <div class="col-12">
+							<a href="{{ path('get_produces', {'id': produce.id}) }}"></a><h2>{{ produce.title }} ici</h2></a>
+					 </div>
+					 <div class="col-12">
+							<p>{{ produce.short_description }}</p>
+					 </div>
+					 {% endfor %}
 				</div>
 			</div>
-		</div>
-		{% endfor %}
+					
 	</div>
-	{# pagination #}
+
+	{# pagination
 	<div class="row justify-content-center">
 		<nav aria-label="Page navigation">
 		  <ul class="pagination justify-content-center">
@@ -48,13 +42,13 @@
 		        <span class="sr-only">Previous</span>
 		      </a>
 		    </li>
-		   {#} {% for page in range(1, totalPages) %}
+		  	{% for page in range(1, totalPages) %}
 		    	{% if page == actualPage %}
-				<li class="page-item active"><a class="page-link" href="{{ path('produces', {'offset': (page-1)*limit} )}}">{{ page }}</a></li>
-				{% else %}
-				<li class="page-item"><a class="page-link" href="{{ path('produces', {'offset': (page-1)*limit} )}}">{{ page }}</a></li>
+						<li class="page-item active"><a class="page-link" href="{{ path('produces', {'offset': (page-1)*limit} )}}">{{ page }}</a></li>
+					{% else %}
+						<li class="page-item"><a class="page-link" href="{{ path('produces', {'offset': (page-1)*limit} )}}">{{ page }}</a></li>
 		    	{% endif %}
-		   #} {% endfor %}
+		  	{% endfor %}
 		    <li class="page-item">
 		      <a class="page-link" href="#" aria-label="Next">
 		        <span aria-hidden="true">&raquo;</span>
@@ -63,11 +57,22 @@
 		    </li>
 		  </ul>
 		</nav>
-	</div>
-	{# {% else %}
-		<p>Aucun produit ne correspond à vos critères.</p>
-	{% endif %} #}
+	</div> #}
+
 </div>
+{% else %}
+<div class="col-12">
+		<div class="row">
+			{# text #}
+			<div class="col-8">
+				<div class="row">
+						Aucun produit n'est répertorié
+				</div>
+			</div>
+		</div>
+	</div> 
+	
+{% endif %}
 
 
 {% endblock %}

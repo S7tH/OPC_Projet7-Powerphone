@@ -9,15 +9,14 @@ security:
             security: false
 
         secured_area:
-            pattern: ^/admin
+            pattern: ^/bilemo
             stateless: false
             simple_preauth:
                 authenticator: facebook_authenticator
             provider: facebook_user_provider
             logout:
-                path:   /admin/logout
+                path:   /bilemo/logout
                 target: /
 
         main:
             anonymous: ~
-        
