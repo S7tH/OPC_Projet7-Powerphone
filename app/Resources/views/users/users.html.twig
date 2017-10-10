@@ -9,27 +9,28 @@
 		<button type="submit" class="btn btn-primary">Search</button>
 	</form>
 
-	{% if produces|length > 0 %} <!-- Vérification si il y a des produits dans la liste -->
+	{% if users|length > 0 %} <!-- Vérification si il y a des produits dans la liste -->
 	<div class="row">
-			{{ dump(produces) }}
+			{{ dump(users) }}
 
+			
 
 			<div class="container">
 				<div class="row">
 					 <header style="margin: 3rem 0;" class="col-12">
-							<h2 class="display-4">Profitez de toute la gamme Bilemo</h2>
+							<h2 class="display-4">Voici la liste des utilisateurs Bilemo</h2>
 					 </header>
-					 {% for produce in produces.data %}
+
+					 {% for user in users %}
 					 <div class="col-12">
-							<a href="{{ path('get_produces', {'id': produce.id}) }}"></a><h2>{{ produce.title }} ici</h2></a>
+							<a href="{{ path('get_user', {'id': user.id}) }}"><h2>{{ user.email }} ici</h2></a>
 					 </div>
-					 <div class="col-12">
-							<p>{{ produce.short_description }}</p>
-					 </div>
+				
 					 {% endfor %}
 				</div>
 			</div>
-					
+				
+			
 	</div>
 
 	{# pagination
@@ -44,9 +45,9 @@
 		    </li>
 		  	{% for page in range(1, totalPages) %}
 		    	{% if page == actualPage %}
-						<li class="page-item active"><a class="page-link" href="{{ path('produces', {'offset': (page-1)*limit} )}}">{{ page }}</a></li>
+						<li class="page-item active"><a class="page-link" href="{{ path('users', {'offset': (page-1)*limit} )}}">{{ page }}</a></li>
 					{% else %}
-						<li class="page-item"><a class="page-link" href="{{ path('produces', {'offset': (page-1)*limit} )}}">{{ page }}</a></li>
+						<li class="page-item"><a class="page-link" href="{{ path('users', {'offset': (page-1)*limit} )}}">{{ page }}</a></li>
 		    	{% endif %}
 		  	{% endfor %}
 		    <li class="page-item">

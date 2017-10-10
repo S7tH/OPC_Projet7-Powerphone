@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-8">
+				{{ dump(produce) }}
+			<h1>{{ produce.title }}</h1>
+			<p>{{ produce.short_description }}</p>
+			<p>{{ produce.content }}</p>
+		</div>
+	</div>
+</div>
+{% endblock %}

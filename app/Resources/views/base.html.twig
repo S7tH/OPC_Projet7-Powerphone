@@ -24,25 +24,23 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#pathhomepage">Accueil</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#pathproduces">Produits</a>
-                        </li>
-                    
                         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                        <li class="nav-item">
-                                
-                            <a class="nav-link" href="{{ path('logout') }}" class="nav-link">Déconnexion</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('get_produces') }}">Produits</a>
+                            </li>
+                            <li class="nav-item">
+                                    <a class="nav-link" href="{{ path('get_users') }}">Utilisateurs</a>
+                                </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('logout') }}"  class="nav-link">Déconnexion</a>
+                            </li>
                         {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link"  href="#pathregister">Inscription</a>
-                        </li>
-                        <li class="nav-item"> 
-                            <a class="nav-link"  href="https://www.facebook.com/v2.10/dialog/oauth?client_id={{ facebook_client_id }}&amp;response_type=code&amp;redirect_uri={{ url('admin_auth') }}">Connexion Facebook</a>
-                        </li>   
+                            <li class="nav-item">
+                                <a class="nav-link"  href="https://www.facebook.com/" target="_blank">Créer un compte Facebook</a>
+                            </li>
+                            <li class="nav-item"> 
+                                <a class="nav-link"  href="https://www.facebook.com/v2.10/dialog/oauth?client_id={{ facebook_client_id }}&amp;response_type=code&amp;redirect_uri={{ url('admin_auth') }}">S'Authentifier avec Facebook</a>
+                            </li>   
                         {% endif %}
                     </ul>
                 </div>
