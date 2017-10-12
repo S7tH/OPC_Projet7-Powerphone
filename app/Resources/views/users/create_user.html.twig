@@ -3,21 +3,17 @@
 {% block body %}
 <br/>
 <div class="container">
-		<h1>Compte utilisateur</h1>
+		<h1>Formulaire d'inscription de nouvel utilisateur</h1>
 		<br/>
 <table class="table table-bordered table-striped table-condensed">
 	<thead>
 		<tr>
-			<th>Identité</th>
 			<th>Email</th>
-			<th>Genre</th>
 		</tr>
 	</thead>
 	<tbody>
 			<tr>
-				<td>{{ user.username }}</td>
-				<td>{{ user.email }}</td>
-				<td>{{ user.gender }}</td>
+				<td>{{ form(form) }}</td>
 			</tr>
 	</tbody>
 </table>

@@ -40,6 +40,7 @@ twig:
     strict_variables: "%kernel.debug%"
     globals:
         facebook_client_id: '%facebook_client_id%'
+        bilemo_doc: '%bilemo_doc%'
 
 # Doctrine Configuration
 doctrine:

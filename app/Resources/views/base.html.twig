@@ -25,12 +25,23 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
                         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                            <li>
+                                <a class="nav-link" href="{{bilemo_doc}}" target="_blank">Documentation de l'api Bilemo</a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="{{ path('admin') }}">Acces</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ path('get_produces') }}">Produits</a>
                             </li>
                             <li class="nav-item">
-                                    <a class="nav-link" href="{{ path('get_users') }}">Utilisateurs</a>
-                                </li>
+                                <a class="nav-link" href="{{ path('get_users') }}">Utilisateurs</a>
+                            </li>
+                            {% block link %}
+                            {% endblock %}
+                            <li class="nav-item">
+                                    <a class="nav-link"  href="https://www.facebook.com/" target="_blank">Votre compte Facebook</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ path('logout') }}"  class="nav-link">Déconnexion</a>
                             </li>
@@ -54,15 +65,20 @@
         </header>
 
 
-        
+        <div style="width: 100%;min-height:822px;">
         {% block body %}{% endblock %}
-        <!-- Footer -->
-        <footer style="position: fixed;bottom: 0;width: 100%;" class="footer py-5 bg-dark">
-            <div class="container">
-                <p class="m-0 text-center text-white">Copyright &copy; Powerphone {{ "now"|date("Y") }}</p>
-            </div>
-        <!-- /.container -->
-        </footer>
+        </div>
+        
+        {% block footer %}
+            <!-- Footer -->
+            <footer class="footer py-5 bg-dark">
+                <div class="container">
+                    <div class="row">
+                        <p class="m-0 text-center text-white">Copyright &copy; Powerphone {{ "now"|date("Y") }}</p>
+                    </div>
+                </div>
+            </footer>
+        {% endblock %}
 
         <!-- CDN jQuery -->
         <script 
