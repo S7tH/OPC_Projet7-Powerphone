@@ -39,8 +39,7 @@ class DefaultController extends Controller
      */
     public function adminAuthAction()
     {
-            // To avoid the ?code= url. Can be done with Javascript.
-            return $this->redirectToRoute('get_produces');
+        return $this->redirectToRoute('get_produces'); 
     }
 
     /**
@@ -67,6 +66,7 @@ class DefaultController extends Controller
             )
         );
         $produces = $this->get('serializer')->deserialize($response->getBody()->getContents(), 'array', 'json');
+
 
         // for pagination
         $totalPages = ceil($produces['meta']['total_items']/$produces['meta']['limit']);
@@ -167,7 +167,7 @@ class DefaultController extends Controller
         $formBuilder
             ->add('email', EmailType::class, array(
                 'required' => true,
-                'label' => 'Email utilisé sur Facebook :  >'))
+                'label' => 'Entrez l\'email du compte Facebook de l\'utilisateur *'))
             ->add('save',  SubmitType::class, array('label' => 'Enregistrer'));
 
             $form= $formBuilder->getForm();
@@ -199,7 +199,7 @@ class DefaultController extends Controller
             catch (\GuzzleHttp\Exception\ClientException $e)
             {
                 $error = json_decode($e->getResponse()->getBody()->getContents(), true);
-                $form->addError(new FormError('Cet utilisateur est déjà inscrit'));
+                $form->addError(new FormError('Cet utilisateur est soit déjà inscrit, ou vous n\'avez pas les droits pour valider cet enregistrement'));
                 return $this->render('users/create_user.html.twig', array(
                     'form'      => $form->createView(),
                 ));

@@ -1,13 +1,14 @@
 {% extends 'base.html.twig' %}
 
+
 {% block body %}
 <br/>
+<br/>
 <div class="container">
-		<h1>Compte utilisateur visionné par
-			{% for prod in produce._embedded %}
-				{{ prod.username|e }}
-			{% endfor %}
-		</h1>
+		<h1>
+		{% for prod in produce._embedded %}
+			Notre produit
+		{% endfor %}</h1>
 		<br/>
 <table class="table table-bordered table-striped table-condensed">
 	<thead>

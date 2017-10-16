@@ -22,7 +22,6 @@ class FacebookUserProvider implements UserProviderInterface
     public function loadUserByUsername($username)
     {
         $url = 'https://graph.facebook.com/me/permissions?access_token='.$username;
-
         $response = $this->client->get($url);
         
         $res = $response->getBody()->getContents();

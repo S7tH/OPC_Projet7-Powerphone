@@ -1,6 +1,14 @@
 {% extends 'base.html.twig' %}
 
+{% block username %}
+, vous souhaite la bienvenue <br/>
+		{% for prod in produces._embedded %}
+			{{ prod.username|e }}
+		{% endfor %}
+{% endblock %}
+
 {% block body %}
+<br/>
 <br/>
 <div class="container">
 	<h1>Nos produits Bilemo</h1>
@@ -13,6 +21,9 @@
 	<div class="row">
 
 			<div class="container">
+				{% if produces.data|length == 0 %}
+					<h4>Aucun produit n'a été trouvé.</h4>
+				{% else %}
 				{# pagination #}
 				<div class="row justify-content-center"></div>
 					<nav aria-label="Page navigation">
@@ -90,7 +101,7 @@
 							</ul>
 						</nav>
 				</div>
-
+				{% endif %}
 			</div>
 
 		</div>

@@ -20,7 +20,9 @@
 	<div class="row">
 
 	<div class="container">
-				
+			{% if users.data|length == 0 %}
+				<h4>Aucun utilisateur n'a été trouvé.</h4>
+			{% else %}
 				{# pagination #}
 				<div class="row justify-content-center">
 						<nav aria-label="Page navigation">
@@ -52,24 +54,24 @@
 					<p class="msg-flash" style="color: green; font-weight: bold;">{{ message }}</p>
 		   		{% endfor %}
 				
-				   {# users #}
+				{# users #}
 				<table class="table table-bordered table-striped table-condensed">
-						<caption>
-						   <h4>Nos utilisateurs Bilemo référencés</h4>
-						</caption>
+					<caption>
+						<h4>Nos utilisateurs Bilemo référencés</h4>
+					</caption>
 						<thead>
-						   <tr>
-								 <th>Email</th>
-								 <th>Compte</th>
-						   </tr>
+						   	<tr>
+								<th>Email</th>
+								<th>Compte</th>
+						   	</tr>
 						</thead>
 						<tbody>
-							{% for user in users.data %}
-							   <tr>
-								 <td>{{ user.email }}</td>
-								 <td><a href="{{ path('get_user', {'id': user.id}) }}"> Voir en détails</a></td>
-							   </tr>
-							   {% endfor %}
+						{% for user in users.data %}
+							<tr>
+								<td>{{ user.email }}</td>
+								<td><a href="{{ path('get_user', {'id': user.id}) }}"> Voir en détails</a></td>
+							</tr>
+						{% endfor %}
 						</tbody>
 				</table>
 
@@ -99,7 +101,7 @@
 							</ul>
 						</nav>
 				</div>
-
+			{% endif %}
 			</div>
 
 		</div>
