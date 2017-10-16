@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\User\User;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-class BilemoUserProvider implements UserProviderInterface
+class FacebookUserProvider implements UserProviderInterface
 {
     private $client;
 
@@ -21,8 +21,7 @@ class BilemoUserProvider implements UserProviderInterface
 
     public function loadUserByUsername($username)
     {
-        $url = 'http://127.0.0.1:8001/user-check/'.$username;
-
+        $url = 'https://graph.facebook.com/me/permissions?access_token='.$username;
         $response = $this->client->get($url);
         
         $res = $response->getBody()->getContents();
@@ -30,7 +29,7 @@ class BilemoUserProvider implements UserProviderInterface
         
         if (!$userData)
         {
-            throw new \LogicException('Did not managed to get your user info from Github.');
+            throw new \LogicException('Did not managed to get your user info from Facebook.');
         }
         $user = new User($username, null);
         

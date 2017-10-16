@@ -1,27 +1,91 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>{% block title %}Welcome{% endblock %}</title>
+        {% block stylesheets %}
+            <!-- CDN Bootstrap Core CSS -->
+            <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
+            
+            <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        {% endblock %}
     </head>
-    <body>
-        <div class="container">
-            <div class="jumbotron">
-                {% block body %}{% endblock %}
-                {% if app.user %}
-                    <a href="{{ path('logout') }}" type="button" class="btn btn-danger btn-lg"><i class="fa fa-sign-out"></i> Logout</a>
-                {% else %}
-                    <a href="http://127.0.0.1:8001/oauth/v2/auth?client_id={{ bilemo_client_id }}&amp;response_type=code&amp;scope=user&amp;state={{ state }}&amp;redirect_uri={{ url('admin_auth') }}" type="button" class="btn btn-info btn-lg"><i class="glyphicon glyphicon-phone"></i> S'authentifier avec Bilemo</a>
-                {% endif %}
+
+    <body id="page-top">
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand" href="#page-top">POWERPHONE {% block username %}{% endblock %}</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('get_produces') }}">Produits</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('get_users') }}">Utilisateurs</a>
+                            </li>
+                            {% block link %}
+                            {% endblock %}
+                            <li>
+                                <a class="nav-link" href="{{bilemo_doc}}" target="_blank">Documentation de l'api Bilemo</a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="{{ path('admin') }}">Access</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('logout') }}"  class="nav-link">Déconnexion</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link"  href="https://www.facebook.com/" target="_blank">Créer un compte Facebook</a>
+                            </li>
+                            <li class="nav-item"> 
+                                <a class="nav-link"  href="https://www.facebook.com/v2.10/dialog/oauth?client_id={{ facebook_client_id }}&amp;response_type=code&amp;redirect_uri={{ url('admin_auth') }}">S'Authentifier avec Facebook</a>
+                            </li>   
+                        {% endif %}
+                    </ul>
+                </div>
             </div>
-            <footer class="footer"><p>&copy; {{ "now"|date("Y") }}</p></footer>
+        </nav>
+
+        <header class="bg-primary text-white">
+            <div class="container text-center">
+              <p class="lead">Powerphone premier client de Bilemo&co</p>
+            </div>
+        </header>
+
+
+        <div style="width: 100%;min-height:822px;">
+        {% block body %}{% endblock %}
         </div>
+        
+        {% block footer %}
+            <!-- Footer -->
+            <footer class="footer py-5 bg-dark">
+                <div class="container">
+                    <div class="row">
+                        <p class="m-0 text-center text-white">Copyright &copy; Powerphone {{ "now"|date("Y") }}</p>
+                    </div>
+                </div>
+            </footer>
+        {% endblock %}
+
+        <!-- CDN jQuery -->
+        <script 
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous">
+        </script>
+
+        <!-- CDN Bootstrap Core JavaScript -->
+        <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
     </body>
 </html>
-
-{# &amp;scope=user&amp;state='.sha1(uniqid(mt_rand(), true)) #}

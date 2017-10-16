@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\Authentication\Token\PreAuthenticatedToken;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-class BilemoAuthenticator implements SimplePreAuthenticatorInterface, AuthenticationFailureHandlerInterface
+class FacebookAuthenticator implements SimplePreAuthenticatorInterface, AuthenticationFailureHandlerInterface
 {
     private $client;
     private $clientId;
@@ -28,45 +28,44 @@ class BilemoAuthenticator implements SimplePreAuthenticatorInterface, Authentica
         $this->clientSecret = $clientSecret;
         $this->router = $router;
     }
-
     //1 call of symfony after that the serv returned a code
     public function createToken(Request $request, $providerKey)
     {
-
         $code = $request->query->get('code');
         $redirectUri = $this->router->generate('admin_auth', [], ROUTER::ABSOLUTE_URL);
-        $url = 'http://127.0.0.1:8001/oauth/v2/token?client_id='.$this->clientId.'&client_secret='.$this->clientSecret.'&redirect_uri='.urlencode($redirectUri).'&grant_type=authorization_code&code='.$code;
-
-        $response = $this->client->post($url, array(''));
-
+        $url = 'https://graph.facebook.com/v2.10/oauth/access_token?client_id='.$this->clientId.'&client_secret='.$this->clientSecret.'&redirect_uri='.urlencode($redirectUri).'&code='.$code;
+        
+        $response = $this->client->get($url);
+        
         $res = $response->getBody()->getContents();
-        $info = explode('&', $res);
-        $res = explode('=', $info[0]);
+       
+        $info = explode(':', $res);
+        
+        $access = explode(',', $info[1]);
+       
+        $res = explode('"', $access[0]);
 
-        if (isset($res[0]) && 'error' == $res[0]) {
-            throw new BadCredentialsException('No access_token returned by Bilemo. Start over the process.');
+        if (isset($res[1]) && 'error' == $res[1])
+        {
+            throw new BadCredentialsException('No access_token returned by Facebook. Start over the process.');
         }
-
         return new PreAuthenticatedToken(
             'anon.',
             $res[1],
             $providerKey
         );
     }
-
+    
     //2
     public function supportsToken(TokenInterface $token, $providerKey)
     {
         return $token instanceof PreAuthenticatedToken && $token->getProviderKey() === $providerKey;
     }
-
+    
     //3 after send the user log, we check if he exists
     public function authenticateToken(TokenInterface $token, UserProviderInterface $userProvider, $providerKey)
     {
         $accessToken = $token->getCredentials();
-
-        //$checkUser = $container->get('security.token_storage')->getToken()->getUser()->getUsername();
-
         $user = $userProvider->loadUserByUsername($accessToken);
         return new PreAuthenticatedToken(
             $user,
@@ -75,7 +74,6 @@ class BilemoAuthenticator implements SimplePreAuthenticatorInterface, Authentica
             ['ROLE_USER']
         );
     }
-
     
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {

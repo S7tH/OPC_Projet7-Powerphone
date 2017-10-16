@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+<br/>
+<br/>
+<div class="container">
+		<h1>
+		{% for prod in produce._embedded %}
+			Notre produit
+		{% endfor %}</h1>
+		<br/>
+<table class="table table-bordered table-striped table-condensed">
+	<thead>
+		<tr>
+			<th>Nom du Produit</th>
+			<th>Description du produit</th>
+			<th>Version</th>
+			<th>Liens</th>
+			<th>Chemins</th>
+		</tr>
+	</thead>
+	<tbody>
+			<tr>
+				<td>{{ produce.title }}</td>
+				<td>{{ produce.content }}</td>
+				<td>{{ produce.api_state }}</td>
+				<td>
+					{% for prod in produce._links|keys %}
+						{{ prod }} <br/>
+					{% endfor %}
+				</td>
+				<td>
+					{% for prod in produce._links %}
+						{{ prod.href|e }}<br/>
+					{% endfor %}
+				</td>
+			</tr>
+	</tbody>
+</table>
+
+<a href="{{ path('get_produces') }}" type="button" class="btn btn-info btn-lg"> Retour à la liste des produits</a> 
+
+
+</div>
+
+{% endblock %}

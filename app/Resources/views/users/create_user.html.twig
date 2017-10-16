@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<br/>
+<div class="container">
+		<h1>Formulaire d'inscription de nouvel utilisateur</h1>
+		<br/>
+		
+<table class="table table-bordered table-striped table-condensed">
+	<caption>
+		<h7>Avertissement: Seul un compte administrateur peut valider ce formulaire</h7>
+	</caption>
+	<thead>
+		<tr>
+			<th>Email</th>
+		</tr>
+	</thead>
+	<tbody>
+			<tr>
+				<td>{{ form(form) }}</td>
+			</tr>
+	</tbody>
+</table>
+
+
+<a href="{{ path('get_users') }}" type="button" class="btn btn-info btn-lg"> Retour à la liste des utilisateurs</a> 
+
+
+</div>
+{% endblock %}
+

@@ -1,7 +1,8 @@
 security:
+
     providers:
-        bilemo_user_provider:
-            id: bilemo_user_provider
+        facebook_user_provider:
+            id: facebook_user_provider
 
     firewalls:
         dev:
@@ -9,15 +10,14 @@ security:
             security: false
 
         secured_area:
-            pattern: ^/admin
+            pattern: ^/bilemo
             stateless: false
             simple_preauth:
-                authenticator: bilemo_authenticator
-            provider: bilemo_user_provider
+                authenticator: facebook_authenticator
+            provider: facebook_user_provider
             logout:
-                path:   /admin/logout
+                path:   /bilemo/logout
                 target: /
 
         main:
             anonymous: ~
-        
