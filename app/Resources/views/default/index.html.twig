@@ -11,8 +11,17 @@
                 <p>Veuillez procéder à votre authentification en vous connectant à votre compte Facebook, afin d'accéder à notre liste de produits</p>
                 
                 <br/>
+
+                <div class="col-12">
+                    <h7><a class="nav-link"  href="https://www.facebook.com/" target="_blank">Par mesure de sécurité, pensez à vous deconnecter de votre compte Facebook une fois terminé</a></h7>
+                </div>
+
+                <br/>
                 <a href="https://www.facebook.com/v2.10/dialog/oauth?client_id={{ facebook_client_id }}&amp;response_type=code&amp;redirect_uri={{ url('admin_auth') }} " type="button" class="btn btn-info btn-lg"><i class="fa fa-facebook"></i> Merci de vous authentifier avec Facebook</a> 
             </div>
+
+            
+            
        </div>
    </div>
 {% endblock %}

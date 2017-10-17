@@ -65,6 +65,7 @@ class DefaultController extends Controller
             'headers' => array('Authorization' => 'Bearer '.$this->getUser()->getUsername())
             )
         );
+
         $produces = $this->get('serializer')->deserialize($response->getBody()->getContents(), 'array', 'json');
 
 
@@ -102,7 +103,7 @@ class DefaultController extends Controller
     /**
      * @Route("/bilemo/users/{limit}/{offset}/{order}", name="get_users")
      */
-     public function getUsersActionRequest($limit=15, $offset=0, $order='asc',Request $request)
+     public function getUsersAction($limit=15, $offset=0, $order='asc',Request $request)
      {
         //if search form is submitted
         if ($request->isMethod('POST') && $request->request->get('keyword') !== '')

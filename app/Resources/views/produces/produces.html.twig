@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block username %}
-, vous souhaite la bienvenue <br/>
+<br/>Bienvenue 
 		{% for prod in produces._embedded %}
 			{{ prod.username|e }}
 		{% endfor %}

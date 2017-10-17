@@ -1,14 +1,17 @@
 {% extends 'base.html.twig' %}
 
+{% block username %}
+<br/>Bienvenue 
+		{% for prod in produce._embedded %}
+			{{ prod.username|e }}
+		{% endfor %}
+{% endblock %}
 
 {% block body %}
 <br/>
 <br/>
 <div class="container">
-		<h1>
-		{% for prod in produce._embedded %}
-			Notre produit
-		{% endfor %}</h1>
+		<h1>Notre produit</h1>
 		<br/>
 <table class="table table-bordered table-striped table-condensed">
 	<thead>
@@ -38,7 +41,6 @@
 			</tr>
 	</tbody>
 </table>
-
 <a href="{{ path('get_produces') }}" type="button" class="btn btn-info btn-lg"> Retour à la liste des produits</a> 
 
 
