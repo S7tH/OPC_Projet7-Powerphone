@@ -1,5 +1,11 @@
 {% extends 'base.html.twig' %}
 
+{% block username %}
+<br/>Bienvenue 
+		{% for u in users._embedded %}
+			{{ u.username|e }}
+		{% endfor %}
+{% endblock %}
 
 {% block link %}
 	<li class="nav-item">
@@ -7,7 +13,9 @@
 	</li>
 {% endblock %}
 
+
 {% block body %}
+<br/>
 <br/>
 <div class="container">
 	<h1>Nos utilisateurs Bilemo référencés</h1>

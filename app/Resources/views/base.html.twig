@@ -5,6 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        {% block meta %}{% endblock %}
         <title>{% block title %}Welcome{% endblock %}</title>
         {% block stylesheets %}
             <!-- CDN Bootstrap Core CSS -->
@@ -44,7 +45,7 @@
                             </li>
                         {% else %}
                             <li class="nav-item">
-                                <a class="nav-link"  href="https://www.facebook.com/" target="_blank">Créer un compte Facebook</a>
+                                <a class="nav-link"  href="https://www.facebook.com/" target="_blank">Créer un compte Facebook/Se déconnecter de Facebook</a>
                             </li>
                             <li class="nav-item"> 
                                 <a class="nav-link"  href="https://www.facebook.com/v2.10/dialog/oauth?client_id={{ facebook_client_id }}&amp;response_type=code&amp;redirect_uri={{ url('admin_auth') }}">S'Authentifier avec Facebook</a>

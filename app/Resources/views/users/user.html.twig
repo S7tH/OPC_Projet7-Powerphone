@@ -1,7 +1,14 @@
 {% extends 'base.html.twig' %}
 
+{% block username %}
+<br/>Bienvenue 
+		{% for u in user._embedded %}
+			{{ u.username|e }}
+		{% endfor %}
+{% endblock %}
 
 {% block body %}
+<br/>
 <br/>
 <div class="container">
 		<h1>Compte utilisateur</h1>
@@ -12,6 +19,8 @@
 			<th>Identité</th>
 			<th>Email</th>
 			<th>Genre</th>
+			<th>Liens</th>
+			<th>Chemins</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -19,6 +28,16 @@
 				<td>{{ user.username }}</td>
 				<td>{{ user.email }}</td>
 				<td>{{ user.gender }}</td>
+				<td>
+					{% for u in user._links|keys %}
+						{{ u }} <br/>
+					{% endfor %}
+				</td>
+				<td>
+					{% for u in user._links %}
+						{{ u.href|e }}<br/>
+					{% endfor %}
+				</td>
 			</tr>
 	</tbody>
 </table>
