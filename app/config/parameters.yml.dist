@@ -10,6 +10,8 @@ parameters:
     mailer_user: null
     mailer_password: null
     secret: 
-    bilemo_client_id: 
-    bilemo_client_secret: 
-    bilemo_api_url: 
+    facebook_client_id:
+    facebook_client_secret:
+    facebook_api_url: https://graph.facebook.com
+    bilemo_api_url: 'http://127.0.0.1:8001'
+    bilemo_doc: 'http://127.0.0.1:8001/api/doc'
